@@ -1,0 +1,22 @@
+#!/bin/bash
+
+XSSH_PORT=20022
+XRDP_PORT=13389
+XNETWORK=host # "bridge" "host"
+
+podman build \
+  -t chris-m-powell/kali-linux \
+  --build-arg SSH_PORT=$XSSH_PORT \
+  --build-arg RDP_PORT=$XRDP_PORT \
+  .
+
+podman create \
+  --name kali-linux \
+  --network $XNETWORK \
+  -p $XRDP_PORT:$XRDP_PORT \
+  --cap-add NET_ADMIN,NET_RAW \
+  -t \
+  -v kali_data:/home/kali \
+  chris-m-powell/kali-linux
+  
+podman start kali-linux
