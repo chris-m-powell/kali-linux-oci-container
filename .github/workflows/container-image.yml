@@ -19,6 +19,6 @@ jobs:
 
       - name: 'Build the image'
         run: |
-          docker build . --file Containerfile --tag ghcr.io/chris-m-powell/kali-linux-oci-container:latest --build-arg SSH_PORT=20022 --build-arg XRDP_PORT=13389
+          docker build -f Containerfile -t ghcr.io/chris-m-powell/kali-linux-oci-container --build-arg SSH_PORT=20022 --build-arg XRDP_PORT=13389 .
           docker push ghcr.io/chris-m-powell/kali-linux-oci-container:latest
 ...
